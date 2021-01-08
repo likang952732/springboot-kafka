@@ -2,6 +2,7 @@ package com.example.kafaksend.controller;
 import com.alibaba.fastjson.JSON;
 import com.example.kafaksend.constant.Topic;
 import com.example.kafaksend.domain.Programmer;
+import com.example.kafaksend.domain.User;
 import com.example.kafaksend.producer.KafKaCustomrProducer;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +13,7 @@ import org.springframework.util.concurrent.ListenableFutureCallback;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.jws.soap.SOAPBinding;
 import java.util.Date;
 
 /*
@@ -59,9 +61,17 @@ public class SendMsgController {
     /***
      * 发送消息体为 bean 的消息
      */
-    @GetMapping("sendBean")
-    public void sendBean() {
-        Programmer programmer = new Programmer("xiaoming", 12, 21212.33f, new Date());
-        producer.sendMessage(Topic.BEAN, JSON.toJSON(programmer).toString());
+    @GetMapping("/sendBean")
+    public String sendBean() {
+        //Programmer programmer = new Programmer("xiaoming", 12, 21212.33f, new Date());
+        log.info("开始发送");
+        User user = new User();
+        user.setName("赵六");
+        user.setPassword("123");
+        user.setLoginName("test3");
+        user.setAddress("张江");
+        user.setEmail("123445@qq.com");
+        producer.sendMessage(Topic.BEAN, JSON.toJSON(user).toString());
+        return "发送完毕";
     }
 }

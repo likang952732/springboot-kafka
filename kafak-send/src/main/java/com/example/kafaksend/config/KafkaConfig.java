@@ -17,4 +17,10 @@ public class KafkaConfig {
         // 指定主题名称，分区数量，和复制因子
         return new NewTopic(Topic.GROUP, 10, (short) 2);
     }
+
+    @Bean
+    public NewTopic beanTopic() {
+        // 指定主题名称，分区数量，和复制因子
+        return new NewTopic(Topic.BEAN, 10, (short) 2);
+    }
 }
